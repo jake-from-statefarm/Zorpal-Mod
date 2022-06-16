@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "zorpal",
+  "ingredients": [
+    {
+      "item": "zorpal:zorp_ingot"
+    },
+    {
+      "item": "zorpal:zorp_ingot"
+    },
+    {
+      "item": "zorpal:zorp_ingot"
+    },
+    {
+      "item": "zorpal:zorp_ingot"
+    },
+    {
+      "item": "zorpal:zorp_ingot"
+    },
+    {
+      "item": "zorpal:zorp_ingot"
+    },
+    {
+      "item": "zorpal:zorp_ingot"
+    },
+    {
+      "item": "zorpal:zorp_ingot"
+    },
+    {
+      "item": "zorpal:zorp_ingot"
+    }
+  ],
+  "result": {
+    "item": "zorpal:zorpal_block"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "zorpal",
+  "ingredients": [
+    {
+      "item": "zorpal:zorpal_block"
+    }
+  ],
+  "result": {
+    "item": "zorpal:zorp_ingot",
+    "count": 9
+  }
+}

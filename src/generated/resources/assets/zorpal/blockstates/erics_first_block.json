@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "zorpal:block/erics_first_block"
+    }
+  }
+}

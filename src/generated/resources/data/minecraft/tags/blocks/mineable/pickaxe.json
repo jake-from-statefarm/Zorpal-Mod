@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "zorpal:erics_first_block",
+    "zorpal:zorpal_ore",
+    "zorpal:powergen",
+    "zorpal:zorpal_block"
+  ]
+}

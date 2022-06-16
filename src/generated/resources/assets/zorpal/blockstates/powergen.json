@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "zorpal:block/powergen_off"
+    },
+    "powered=true": {
+      "model": "zorpal:block/powergen_on"
+    }
+  }
+}

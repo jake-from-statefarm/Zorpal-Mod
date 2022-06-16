@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "zorpal:block/powergen_on",
+    "up": "zorpal:block/powergen_on",
+    "north": "zorpal:block/powergen_on",
+    "south": "zorpal:block/powergen_on",
+    "east": "zorpal:block/powergen_on",
+    "west": "zorpal:block/powergen_on"
+  }
+}

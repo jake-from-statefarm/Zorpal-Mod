@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "tag": "zorpal:zorpal_ore"
+  },
+  "result": "zorpal:zorp_ingot",
+  "experience": 1.0,
+  "cookingtime": 50
+}
