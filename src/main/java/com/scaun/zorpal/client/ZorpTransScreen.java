@@ -53,7 +53,7 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
         // String completeString = percentString + " - " + energyString;
 
         // Draws the String containing RF and percent information
-        // drawString(matrixStack, Minecraft.getInstance().font, completeString, 60, 10, 0xffffff);
+        drawString(matrixStack, Minecraft.getInstance().font, percentString, 30, trueY, 0xffffff);
 
         // Draw the "energy bar"
         //                x1        y2     x2            y2         color
