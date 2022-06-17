@@ -204,9 +204,12 @@ public class ZorpBE extends BlockEntity {
     }
 
     private boolean hasRecipe() {
-        boolean a = isInArray(itemHandler.getStackInSlot(0).getTags().toArray(), Tags.Items.INGOTS);
+        boolean a = isInArray(itemHandler.getStackInSlot(0).getTags().toArray(), Tags.Items.INGOTS) ||
+                    isInArray(itemHandler.getStackInSlot(0).getTags().toArray(), Tags.Items.GEMS);
         boolean b = itemHandler.getStackInSlot(1).getItem() == Registration.ZORP_INGOT.get();
         return a && b;
+
+        
     }
 
     private boolean hasNotReachedStackLimit() {

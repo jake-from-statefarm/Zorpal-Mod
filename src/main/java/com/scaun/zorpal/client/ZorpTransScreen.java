@@ -43,14 +43,14 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
         int pxpos = 79;
         int pypos = 30;
         int pw = 8;
-        int ph = 7;
+        int ph = 8;
         int ptrueY = (int)(pypos + (ph - (float)ph * progressPercent()));
 
         DecimalFormat oneDecimal = new DecimalFormat("#.0");
 
         String percentString = oneDecimal.format((energyPercent() * 100)) + "%";
         String energyString = menu.getEnergy() + "RF";
-        String completeString = percentString + " - " + energyString;
+        // String completeString = percentString + " - " + energyString;
 
         // Draws the String containing RF and percent information
         // drawString(matrixStack, Minecraft.getInstance().font, completeString, 60, 10, 0xffffff);

@@ -47,11 +47,6 @@ public class ZorpContainer extends AbstractContainerMenu {
         }
         layoutPlayerInventorySlots(10, 70);
         trackPower();
-        //trackProgress();
-    }
-
-    private void trackProgress() {
-        blockEntity.getUpdatePacket();
     }
 
     // Setup syncing of power from server to client
