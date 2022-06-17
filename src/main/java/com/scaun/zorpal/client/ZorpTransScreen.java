@@ -2,6 +2,8 @@ package com.scaun.zorpal.client;
 
 import java.text.DecimalFormat;
 
+import org.lwjgl.opengl.GL11;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.scaun.zorpal.Zorpal;
@@ -9,9 +11,12 @@ import com.scaun.zorpal.blocks.ZorpContainer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+
+
 
 public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
 
@@ -31,6 +36,8 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
 
     @Override
     protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
+        Font font = Minecraft.getInstance().font;
+
         // bar is wxh px at xpos,ypos
         int xpos = 43;
         int ypos = 8;
@@ -48,12 +55,20 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
 
         DecimalFormat oneDecimal = new DecimalFormat("#.0");
 
-        String percentString = oneDecimal.format((energyPercent() * 100)) + "%";
+        String percentString = oneDecimal.format((energyPercent() * 100)) + "% -";
         String energyString = menu.getEnergy() + "RF";
-        // String completeString = percentString + " - " + energyString;
 
-        // Draws the String containing RF and percent information
-        drawString(matrixStack, Minecraft.getInstance().font, percentString, 30, trueY, 0xffffff);
+
+        float fscale = 0.8f;
+        float fx = 42.0f;
+        float fy = (float)trueY - 1.0f;
+
+        matrixStack.scale(fscale, fscale, fscale);
+
+        int fw = font.width(percentString);
+        drawString(matrixStack, font, percentString, (int)((fx / fscale) - fw), (int)(fy / fscale), 0xffffff);
+
+        matrixStack.scale(1/fscale, 1/fscale, 1/fscale);
 
         // Draw the "energy bar"
         //                x1        y2     x2            y2         color
@@ -81,7 +96,7 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
     }
 
     private float progressPercent() {
-        System.out.println("CLIENT: " + menu.getCounter());
+        //System.out.println("CLIENT: " + menu.getCounter());
         return (float)menu.getCounter() / (float)menu.getCounterMax();
     }
     

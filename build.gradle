@@ -144,9 +144,6 @@ repositories {
     maven { // JEI
         url "https://dvs1.progwml6.com/files/maven"
     }
-    maven { // TOP
-        url "https://cursemaven.com"
-    } 
     maven { // Mekanism
         url 'https://modmaven.dev/'
     }
@@ -160,8 +157,6 @@ dependencies {
 
     compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
     implementation fg.deobf("mezz.jei:jei-${jei_version}")
-
-    implementation fg.deobf("curse.maven:the-one-probe-245211:3550084")
 
     compileOnly "mekanism:Mekanism:${mekanism_version}:api"
     runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")// core
