@@ -4,8 +4,8 @@ import java.sql.Time;
 
 import javax.annotation.Nonnull;
 
-import com.scaun.zorpal.cap.IProgress;
-import com.scaun.zorpal.cap.ProgressCapability;
+import com.scaun.zorpal.cap.IMachine;
+import com.scaun.zorpal.cap.MachineCapability;
 import com.scaun.zorpal.setup.Registration;
 import com.scaun.zorpal.tools.CustomEnergyStorage;
 
@@ -28,6 +28,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 public class ZorpBE extends BlockEntity {
 
@@ -39,14 +40,24 @@ public class ZorpBE extends BlockEntity {
     public static final float TIME = 8.0f;
 
         // Never create lazy optionals in getCapability. Always place them as fields in the tile entity:
-    private final ItemStackHandler itemHandler = createHandler();
-    private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
+    private final ItemStackHandler itemHandlerLeft = createHandler();
+    private final ItemStackHandler itemHandlerRight = createHandler();
+    private final ItemStackHandler itemHandlerOut = createHandler();
+    private final ItemStackHandler[] allSlots = {itemHandlerLeft, itemHandlerRight, itemHandlerOut};
+
+    private final LazyOptional<IItemHandler> handlerLeft = LazyOptional.of(() -> itemHandlerLeft);
+    private final LazyOptional<IItemHandler> handlerRight = LazyOptional.of(() -> itemHandlerRight);
+    private final LazyOptional<IItemHandler> handlerOut = LazyOptional.of(() -> itemHandlerOut);
+
+    private final LazyOptional<IItemHandler> handlerInput = LazyOptional.of(() -> new CombinedInvWrapper(itemHandlerLeft, itemHandlerRight));
+    private final LazyOptional<IItemHandler> handlerEverything = LazyOptional.of(() -> new CombinedInvWrapper(allSlots));
+
 
     private final CustomEnergyStorage energyStorage = createEnergy();
     private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
-    private final ProgressCapability progressCap = createProgress();
-    private final LazyOptional<IProgress> progress = LazyOptional.of(() -> progressCap);
+    private final MachineCapability progressCap = createProgress();
+    private final LazyOptional<IMachine> progress = LazyOptional.of(() -> progressCap);
 
     private boolean signal = false;
     private boolean isCrafting = false;
@@ -59,7 +70,7 @@ public class ZorpBE extends BlockEntity {
     @Override
     public void setRemoved() {
         super.setRemoved();
-        handler.invalidate();
+        handlerEverything.invalidate();
         energy.invalidate();
         
     }
@@ -181,8 +192,8 @@ public class ZorpBE extends BlockEntity {
         };
     }
 
-    private ProgressCapability createProgress() {
-        return new ProgressCapability() {
+    private MachineCapability createProgress() {
+        return new MachineCapability() {
 
             @Override
             public void onProgressChanged() {
@@ -200,7 +211,7 @@ public class ZorpBE extends BlockEntity {
         if (cap == CapabilityEnergy.ENERGY) {
             return energy.cast();
         }
-        if (cap == ProgressCapability.PROGRESS) {
+        if (cap == MachineCapability.PROGRESS) {
             return progress.cast();
         }
         return super.getCapability(cap, side);

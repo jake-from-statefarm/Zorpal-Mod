@@ -1,7 +1,7 @@
 package com.scaun.zorpal.blocks;
 
-import com.scaun.zorpal.cap.IProgress;
-import com.scaun.zorpal.cap.ProgressCapability;
+import com.scaun.zorpal.cap.IMachine;
+import com.scaun.zorpal.cap.MachineCapability;
 import com.scaun.zorpal.setup.Registration;
 import com.scaun.zorpal.tools.CustomDisabledSlot;
 import com.scaun.zorpal.tools.CustomEnergyStorage;
@@ -139,7 +139,7 @@ public class ZorpContainer extends AbstractContainerMenu {
 
     public int getCounter() {
         //System.out.println("CLIENT: " + blockEntity.getCapability(ProgressCapability.PROGRESS).map(IProgress::getProgress).orElse(0));
-        return blockEntity.getCapability(ProgressCapability.PROGRESS).map(IProgress::getProgress).orElse(0);
+        return blockEntity.getCapability(MachineCapability.MACHINE).map(IMachine::getProgress).orElse(0);
     }
 
     public int getCounterMax() {

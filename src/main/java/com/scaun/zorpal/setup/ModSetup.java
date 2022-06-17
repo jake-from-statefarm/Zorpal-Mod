@@ -1,6 +1,6 @@
 package com.scaun.zorpal.setup;
 
-import com.scaun.zorpal.cap.IProgress;
+import com.scaun.zorpal.cap.IMachine;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -26,6 +26,6 @@ public class ModSetup {
 
     @SubscribeEvent
     public void registerCaps(RegisterCapabilitiesEvent event) {
-        event.register(IProgress.class);
+        event.register(IMachine.class);
     }
 }
