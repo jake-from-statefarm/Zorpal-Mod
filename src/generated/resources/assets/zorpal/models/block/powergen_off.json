@@ -6,6 +6,7 @@
     "north": "zorpal:block/powergen_off",
     "south": "zorpal:block/powergen_off",
     "east": "zorpal:block/powergen_off",
-    "west": "zorpal:block/powergen_off"
+    "west": "zorpal:block/powergen_off",
+    "particle": "zorpal:block/powergen_off"
   }
 }

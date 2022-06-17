@@ -2,6 +2,8 @@ package com.scaun.zorpal.datagen;
 
 import java.util.function.Function;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.scaun.zorpal.Zorpal;
 import com.scaun.zorpal.setup.Registration;
 
@@ -28,8 +30,29 @@ public class MyBlockStates extends BlockStateProvider {
         simpleBlock(Registration.ZORPAL_ORE_STONE.get());
         simpleBlock(Registration.ZORPAL_BLOCK.get());
         
-        registerPowergen(Registration.POWERGEN.get()); 
+        registerPowergen(Registration.POWERGEN.get());
+        registerZorpTrans(Registration.ZORP_TRANS.get());
         
+    }
+
+    private void registerZorpTrans(@NotNull Block block) {
+        ResourceLocation off = new ResourceLocation(Zorpal.MODID, "block/zorp_trans_off");
+        ResourceLocation on = new ResourceLocation(Zorpal.MODID, "block/zorp_trans_on");
+        ResourceLocation cap = new ResourceLocation(Zorpal.MODID, "block/zorp_trans_top");
+        ResourceLocation side = new ResourceLocation(Zorpal.MODID, "block/zorp_trans");
+
+        BlockModelBuilder modelOFF = models().cube("zorp_trans_off", cap, cap, off, side, side, side);
+        BlockModelBuilder modelON = models().cube("zorp_trans_on", cap, cap, on, side, side, side);
+        modelOFF.texture("particle", cap);
+        modelON.texture("particle", cap);
+
+        orientedBlock(block, state -> {
+            if (state.getValue(BlockStateProperties.POWERED)) {
+                return modelON;
+            } else {
+                return modelOFF;
+            }
+        });
     }
 
     private void registerPowergen(Block block) {
@@ -38,6 +61,8 @@ public class MyBlockStates extends BlockStateProvider {
         
         BlockModelBuilder modelOFF = models().cube("powergen_off", off, off, off, off, off, off);
         BlockModelBuilder modelON = models().cube("powergen_on", on, on, on, on, on, on);
+        modelOFF.texture("particle", off);
+        modelON.texture("particle", on);
 
         stateBlock(block, state -> {
             if (state.getValue(BlockStateProperties.POWERED)) {

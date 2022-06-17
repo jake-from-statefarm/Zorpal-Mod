@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class PowergenBE extends BlockEntity {
 
     public static final int POWERGEN_CAPACITY = 120000;
-    public static final int POWERGEN_GENERATE = 60;
+    public static final int POWERGEN_GENERATE = 120;
     public static final int POWERGEN_SEND = 2000;
 
     // Never create lazy optionals in getCapability. Always place them as fields in the tile entity:

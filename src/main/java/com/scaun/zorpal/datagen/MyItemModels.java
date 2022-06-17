@@ -17,6 +17,7 @@ public class MyItemModels extends ItemModelProvider {
         withExistingParent(Registration.ZORPAL_ORE_STONE_ITEM.get().getRegistryName().getPath(), modLoc("block/zorpal_ore"));
         withExistingParent(Registration.ZORPAL_BLOCK_ITEM.get().getRegistryName().getPath(), modLoc("block/zorpal_block"));
         withExistingParent(Registration.POWERGEN_ITEM.get().getRegistryName().getPath(), modLoc("block/powergen_off"));
+        withExistingParent(Registration.ZORP_TRANS_ITEM.get().getRegistryName().getPath(), modLoc("block/zorp_trans_off"));
 
         singleTexture(Registration.RAW_ZORP.get().getRegistryName().getPath(),
                 mcLoc("item/generated"),

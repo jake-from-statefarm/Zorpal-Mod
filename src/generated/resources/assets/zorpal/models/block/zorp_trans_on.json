@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "zorpal:block/zorp_trans_top",
+    "up": "zorpal:block/zorp_trans_top",
+    "north": "zorpal:block/zorp_trans_on",
+    "south": "zorpal:block/zorp_trans",
+    "east": "zorpal:block/zorp_trans",
+    "west": "zorpal:block/zorp_trans",
+    "particle": "zorpal:block/zorp_trans_top"
+  }
+}

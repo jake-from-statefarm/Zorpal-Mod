@@ -4,6 +4,7 @@
     "zorpal:erics_first_block",
     "zorpal:zorpal_ore",
     "zorpal:powergen",
-    "zorpal:zorpal_block"
+    "zorpal:zorpal_block",
+    "zorpal:zorp_trans"
   ]
 }

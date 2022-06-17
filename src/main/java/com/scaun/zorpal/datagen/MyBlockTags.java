@@ -20,12 +20,14 @@ public class MyBlockTags extends BlockTagsProvider {
                 .add(Registration.FIRST_BLOCK.get())
                 .add(Registration.ZORPAL_ORE_STONE.get())
                 .add(Registration.POWERGEN.get())
-                .add(Registration.ZORPAL_BLOCK.get());
+                .add(Registration.ZORPAL_BLOCK.get())
+                .add(Registration.ZORP_TRANS.get());
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(Registration.FIRST_BLOCK.get())
                 .add(Registration.ZORPAL_ORE_STONE.get())
                 .add(Registration.POWERGEN.get())
-                .add(Registration.ZORPAL_BLOCK.get());
+                .add(Registration.ZORPAL_BLOCK.get())
+                .add(Registration.ZORP_TRANS.get());
         tag(Tags.Blocks.ORES)
                 .add(Registration.FIRST_BLOCK.get())
                 .add(Registration.ZORPAL_ORE_STONE.get());

@@ -43,7 +43,7 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
         int pxpos = 79;
         int pypos = 30;
         int pw = 8;
-        int ph = 10;
+        int ph = 7;
         int ptrueY = (int)(pypos + (ph - (float)ph * progressPercent()));
 
         DecimalFormat oneDecimal = new DecimalFormat("#.0");
@@ -60,8 +60,7 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
         fill(matrixStack, xpos,     trueY, xpos + w,     ypos + h,  0xffff0000);
         fill(matrixStack, xpos + o, trueY, xpos + w - o, ypos + h,  0xffff4040);
         // Draw the "progress bar"
-        fill(matrixStack, pxpos,    pypos, pxpos + pw,   ptrueY - 2, 0xffffffff);
-        // TODO Draw the arrow overlaying the progress bar
+        fill(matrixStack, pxpos,    pypos, pxpos + pw,   ptrueY,    0xffffffff);
         RenderSystem.setShaderTexture(0, ARR);
         int relX = 0; // (this.width - this.imageWidth) / 2;
         int relY = 0; // (this.height - this.imageHeight) / 2;
@@ -82,6 +81,7 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
     }
 
     private float progressPercent() {
+        System.out.println("CLIENT: " + menu.getCounter());
         return (float)menu.getCounter() / (float)menu.getCounterMax();
     }
     

@@ -12,13 +12,14 @@ import com.scaun.zorpal.tools.CustomEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -30,9 +31,9 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class ZorpBE extends BlockEntity {
 
-    public static final int CAPACITY = 80000;
+    public static final int CAPACITY = 200000;
     public static final int RECEIVE = 2000;
-    public static final int USAGE = 320 / 20; 
+    public static final int USAGE = 80; 
     public static final float SPEED = 1.0f;
     public static final int TPS = 20;
     public static final float TIME = 8.0f;
@@ -63,29 +64,38 @@ public class ZorpBE extends BlockEntity {
     }
 
     public void tickServer() {
+        BlockState blockState = level.getBlockState(worldPosition);
         getLevel().sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 2);
 
         if (hasRecipe() && hasNotReachedStackLimit() && energyStorage.getEnergyStored() >= (USAGE * TPS * TIME) / SPEED && !isCrafting) {
-            progressCap.setProgress((int)(USAGE * TIME));
+            progressCap.setProgress((int)(TPS * TIME));
             isCrafting = true;
+            level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, true), Block.UPDATE_ALL);
             setChanged();
         }
         if (hasRecipe() && isCrafting) {
             progressCap.addProgress((int)(-SPEED));;
+
             energyStorage.addEnergy(-USAGE);
+            level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, true), Block.UPDATE_ALL);
             setChanged();
 
             if (progressCap.getProgress() <= 0) {
                 itemHandler.extractItem(1, 1, false);
                 itemHandler.setStackInSlot(2,
                     new ItemStack(itemHandler.getStackInSlot(0).getItem(), itemHandler.getStackInSlot(2).getCount() + 1));
-                progressCap.setProgress((int)(USAGE * TIME));
+                progressCap.setProgress((int)(TPS * TIME));
                 isCrafting = false;
                 setChanged();
             }
         }
         else {
-            progressCap.setProgress((int)(USAGE * TIME));
+            progressCap.setProgress((int)(TPS * TIME));
+            level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, false), Block.UPDATE_ALL);
+        }
+
+        if (blockState.getValue(BlockStateProperties.POWERED) != (hasRecipe() && isCrafting)) {
+
         }
     }
 
@@ -210,6 +220,6 @@ public class ZorpBE extends BlockEntity {
     }
 
     public int getCounterMax() {
-        return (int)(TIME * TPS);
+        return (int)(TPS * TIME);
     }
 }

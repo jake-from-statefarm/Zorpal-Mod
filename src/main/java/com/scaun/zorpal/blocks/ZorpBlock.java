@@ -46,6 +46,7 @@ public class ZorpBlock extends Block implements EntityBlock {
         );
     }
 
+
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new ZorpBE(pos, state);
@@ -73,13 +74,16 @@ public class ZorpBlock extends Block implements EntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(BlockStateProperties.POWERED);
+        builder.add(BlockStateProperties.POWERED)
+               .add(BlockStateProperties.FACING);
     }
     
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return super.getStateForPlacement(context).setValue(BlockStateProperties.POWERED, false);
+        return super.getStateForPlacement(context).setValue(BlockStateProperties.POWERED, false)
+                    .setValue(BlockStateProperties.FACING, context.getHorizontalDirection().getOpposite());
+        
     }
 
     @Override

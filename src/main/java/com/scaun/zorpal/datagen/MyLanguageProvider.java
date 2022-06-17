@@ -21,6 +21,7 @@ public class MyLanguageProvider extends LanguageProvider {
         add(Registration.ZORPAL_BLOCK.get(), "God");
 
         add(Registration.POWERGEN.get(), "Power Generator");
+        add(Registration.ZORP_TRANS.get(), "Zorpal Transfuser");
 
         add(Registration.RAW_ZORP.get(), "Raw Zorp Chunk");
         add(Registration.ZORP_INGOT.get(), "Zorpal Ingot");
