@@ -61,7 +61,10 @@ public class ZorpBE extends BlockEntity {
         super.setRemoved();
         handler.invalidate();
         energy.invalidate();
+        
     }
+
+
 
     public void tickServer() {
         BlockState blockState = level.getBlockState(worldPosition);

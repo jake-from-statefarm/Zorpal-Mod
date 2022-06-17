@@ -39,13 +39,13 @@ public class ZorpContainer extends AbstractContainerMenu {
 
         if (blockEntity != null) {
             blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, 0, 65, 11));
-                addSlot(new SlotItemHandler(h, 1, 85, 11));
-                addSlot(new CustomDisabledSlot(h, 2, 76, 40));
+                addSlot(new SlotItemHandler(h, 0, 66, 12));
+                addSlot(new SlotItemHandler(h, 1, 86, 12));
+                addSlot(new CustomDisabledSlot(h, 2, 77, 41));
                 //addSlot(new SlotItemHandler(h, 2, 74, 40));
             });
         }
-        layoutPlayerInventorySlots(10, 70);
+        layoutPlayerInventorySlots(11, 71);
         trackPower();
     }
 
@@ -97,7 +97,7 @@ public class ZorpContainer extends AbstractContainerMenu {
                     if (!this.moveItemStackTo(stack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (stack.is(Tags.Items.INGOTS) && index > 2){
+                } else if ((stack.is(Tags.Items.INGOTS) || stack.is(Tags.Items.GEMS)) && index > 2){
                     if (!this.moveItemStackTo(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

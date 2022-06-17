@@ -14,7 +14,7 @@ import java.text.DecimalFormat;
 
 public class PowergenScreen extends AbstractContainerScreen<PowergenContainer> {
 
-    private final ResourceLocation GUI = new ResourceLocation(Zorpal.MODID, "textures/gui/powergen_gui2.png");
+    private final ResourceLocation GUI = new ResourceLocation(Zorpal.MODID, "textures/gui/powergen_gui.png");
 
     public PowergenScreen(PowergenContainer container, Inventory inv, Component name) {
         super(container, inv, name);
@@ -30,8 +30,8 @@ public class PowergenScreen extends AbstractContainerScreen<PowergenContainer> {
     @Override
     protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
         // bar is wxh px at xpos,ypos
-        int xpos = 43;
-        int ypos = 8;
+        int xpos = 44;
+        int ypos = 9;
         int w = 10;
         int h = 52;
         int o = 1; // amount to offset the "inner" energy bar

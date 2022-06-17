@@ -33,10 +33,10 @@ public class PowergenContainer extends AbstractContainerMenu {
 
         if (blockEntity != null) {
             blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, 0, 64, 24));
+                addSlot(new SlotItemHandler(h, 0, 65, 25));
             });
         }
-        layoutPlayerInventorySlots(10, 70);
+        layoutPlayerInventorySlots(11, 71);
         trackPower();
     }
 
