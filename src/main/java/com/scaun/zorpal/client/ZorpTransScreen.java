@@ -21,7 +21,9 @@ import net.minecraft.world.entity.player.Inventory;
 public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
 
     private final ResourceLocation GUI = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans_gui.png");
-    private final ResourceLocation ARR = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans_arrow3.png");
+    private final ResourceLocation ARR = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/zorp_trans_arrow3.png");
+    private final ResourceLocation SIDES_SMALL = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/sides_s.png");
+    private final ResourceLocation POWER_SMALL = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/power_s.png");
 
     public ZorpTransScreen(ZorpContainer container, Inventory inv, Component name) {
         super(container, inv, name);
@@ -36,15 +38,12 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
 
     @Override
     protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
-        
-        drawString(matrixStack, Minecraft.getInstance().font, "LAB", 0, 0, 0xffff0000);
         renderBars(matrixStack);
         renderButtons(matrixStack, mouseX, mouseY);
     }
 
     private void renderBars(PoseStack matrixStack) {
         Font font = Minecraft.getInstance().font;
-        drawString(matrixStack, Minecraft.getInstance().font, "BAR", -40, -40, 0xffff0000);
 
         // bar is wxh px at xpos,ypos
         int xpos = 44;
@@ -87,6 +86,30 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
     }
 
     private void renderButtons(PoseStack matrixStack, int mouseX, int mouseY) {
+        //14 35
+        int mx = mouseX - getGuiLeft();
+        int my = mouseY - getGuiTop();
+
+        int smallx = -19;
+        int largex = -40;
+        int pyOriginal = 35;
+
+        int sx = smallx;
+        int sy = 14;
+        int px = smallx;
+        int py = pyOriginal;
+
+        ResourceLocation sides = SIDES_SMALL;
+        ResourceLocation power = POWER_SMALL;
+
+        RenderSystem.setShaderTexture(0, sides);
+        this.blit(matrixStack, sx, sy, 0, 0, 256, 256);
+        RenderSystem.setShaderTexture(0, power);
+        this.blit(matrixStack, px, py, 0, 0, 256, 256);
+
+
+
+        drawString(matrixStack, Minecraft.getInstance().font, "X", mx, my, 0xffff0000);
     }
 
     @Override
@@ -97,7 +120,6 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
         // String str = relX + ", " + relY + ": " + this.imageWidth + "x" + this.imageHeight;
         // System.out.println(str);
         this.blit(matrixStack, relX, relY, 0, 0, 256, 256);
-        drawString(matrixStack, Minecraft.getInstance().font, "BG", 0, 0, 0xffff0000);
     }
 
     private float energyPercent() {
