@@ -22,11 +22,13 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 public class ZorpContainer extends AbstractContainerMenu {
     private final BlockEntity blockEntity;
     private final Player playerEntity;
     private final IItemHandler playerInventory;
+
 
     private BlockPos pos;
 
@@ -42,7 +44,6 @@ public class ZorpContainer extends AbstractContainerMenu {
                 addSlot(new SlotItemHandler(h, 0, 66, 12));
                 addSlot(new SlotItemHandler(h, 1, 86, 12));
                 addSlot(new CustomDisabledSlot(h, 2, 77, 41));
-                //addSlot(new SlotItemHandler(h, 2, 74, 40));
             });
         }
         layoutPlayerInventorySlots(11, 71);

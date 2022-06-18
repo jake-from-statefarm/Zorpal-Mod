@@ -44,7 +44,7 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
 
     private void renderBars(PoseStack matrixStack) {
         Font font = Minecraft.getInstance().font;
-        drawString(matrixStack, Minecraft.getInstance().font, "BAR", 0, 0, 0xffff0000);
+        drawString(matrixStack, Minecraft.getInstance().font, "BAR", -40, -40, 0xffff0000);
 
         // bar is wxh px at xpos,ypos
         int xpos = 44;

@@ -40,17 +40,19 @@ public class ZorpBE extends BlockEntity {
     public static final float TIME = 8.0f;
 
         // Never create lazy optionals in getCapability. Always place them as fields in the tile entity:
-    private final ItemStackHandler itemHandlerLeft = createHandler();
-    private final ItemStackHandler itemHandlerRight = createHandler();
-    private final ItemStackHandler itemHandlerOut = createHandler();
+    private final ItemStackHandler itemHandlerLeft = createHandler(1);
+    private final ItemStackHandler itemHandlerRight = createHandler(1);
+    private final ItemStackHandler itemHandlerOut = createHandler(1);
+
     private final ItemStackHandler[] allSlots = {itemHandlerLeft, itemHandlerRight, itemHandlerOut};
+
+    private final CombinedInvWrapper itemHandler = new CombinedInvWrapper(itemHandlerLeft, itemHandlerRight, itemHandlerOut);
 
     private final LazyOptional<IItemHandler> handlerLeft = LazyOptional.of(() -> itemHandlerLeft);
     private final LazyOptional<IItemHandler> handlerRight = LazyOptional.of(() -> itemHandlerRight);
     private final LazyOptional<IItemHandler> handlerOut = LazyOptional.of(() -> itemHandlerOut);
-
     private final LazyOptional<IItemHandler> handlerInput = LazyOptional.of(() -> new CombinedInvWrapper(itemHandlerLeft, itemHandlerRight));
-    private final LazyOptional<IItemHandler> handlerEverything = LazyOptional.of(() -> new CombinedInvWrapper(allSlots));
+    private final LazyOptional<IItemHandler> handlerEverything = LazyOptional.of(() -> itemHandler);
 
 
     private final CustomEnergyStorage energyStorage = createEnergy();
@@ -71,11 +73,8 @@ public class ZorpBE extends BlockEntity {
     public void setRemoved() {
         super.setRemoved();
         handlerEverything.invalidate();
-        energy.invalidate();
-        
+        energy.invalidate();        
     }
-
-
 
     public void tickServer() {
         BlockState blockState = level.getBlockState(worldPosition);
@@ -121,8 +120,14 @@ public class ZorpBE extends BlockEntity {
 
     @Override
     public void load(CompoundTag tag) {
-        if (tag.contains("Inventory")) {
-            itemHandler.deserializeNBT(tag.getCompound("Inventory"));
+        if (tag.contains("InventoryLeft")) {
+            allSlots[0].deserializeNBT(tag.getCompound("InventoryLeft"));
+        }
+        if (tag.contains("InventoryRight")) {
+            allSlots[1].deserializeNBT(tag.getCompound("InventoryRight"));
+        }
+        if (tag.contains("InventoryOut")) {
+            allSlots[2].deserializeNBT(tag.getCompound("InventoryOut"));
         }
         if (tag.contains("Energy")) {
             energyStorage.deserializeNBT(tag.get("Energy"));
@@ -137,13 +142,13 @@ public class ZorpBE extends BlockEntity {
 
     @Override
     public void saveAdditional(CompoundTag tag) {
-        tag.put("Inventory", itemHandler.serializeNBT());
+        tag.put("InventoryLeft", allSlots[0].serializeNBT());
+        tag.put("InventoryRight", allSlots[1].serializeNBT());
+        tag.put("InventoryOut", allSlots[2].serializeNBT());
         tag.put("Energy", energyStorage.serializeNBT());
         tag.put("progress", progressCap.serializeNBT());
 
         CompoundTag infoTag = new CompoundTag();
-        int tmp = 0;
-        infoTag.putInt("Counter", tmp);
         tag.put("Info", infoTag);
     }
 
@@ -182,8 +187,8 @@ public class ZorpBE extends BlockEntity {
         };
     }
 
-    private ItemStackHandler createHandler() {
-        return new ItemStackHandler(3) {
+    private ItemStackHandler createHandler(int i) {
+        return new ItemStackHandler(i) {
 
             @Override
             protected void onContentsChanged(int slot) {
@@ -196,7 +201,7 @@ public class ZorpBE extends BlockEntity {
         return new MachineCapability() {
 
             @Override
-            public void onProgressChanged() {
+            public void onChanged() {
                 setChanged();
             }
         };
@@ -206,12 +211,13 @@ public class ZorpBE extends BlockEntity {
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return handler.cast();
+            return handlerEverything.cast();
+            // return fuckthis.cast();
         }
         if (cap == CapabilityEnergy.ENERGY) {
             return energy.cast();
         }
-        if (cap == MachineCapability.PROGRESS) {
+        if (cap == MachineCapability.MACHINE) {
             return progress.cast();
         }
         return super.getCapability(cap, side);
