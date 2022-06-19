@@ -58,15 +58,15 @@ public class ZorpBE extends BlockEntity {
     private final CustomEnergyStorage energyStorage = createEnergy();
     private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
-    private final MachineCapability progressCap = createProgress();
-    private final LazyOptional<IMachine> progress = LazyOptional.of(() -> progressCap);
+    private final MachineCapability machineCap = createProgress();
+    private final LazyOptional<IMachine> machineLazy = LazyOptional.of(() -> machineCap);
 
     private boolean signal = false;
     private boolean isCrafting = false;
 
     public ZorpBE(BlockPos pos, BlockState state) {
         super(Registration.ZORP_TRANS_BE.get(), pos, state);
-        progressCap.setProgress((int)(USAGE * TIME));
+        machineCap.setProgress((int)(USAGE * TIME));
     }
 
     @Override
@@ -81,29 +81,29 @@ public class ZorpBE extends BlockEntity {
         getLevel().sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 2);
 
         if (hasRecipe() && hasNotReachedStackLimit() && energyStorage.getEnergyStored() >= (USAGE * TPS * TIME) / SPEED && !isCrafting) {
-            progressCap.setProgress((int)(TPS * TIME));
+            machineCap.setProgress((int)(TPS * TIME));
             isCrafting = true;
             level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, true), Block.UPDATE_ALL);
             setChanged();
         }
         if (hasRecipe() && isCrafting) {
-            progressCap.addProgress((int)(-SPEED));;
+            machineCap.addProgress((int)(-SPEED));;
 
             energyStorage.addEnergy(-USAGE);
             level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, true), Block.UPDATE_ALL);
             setChanged();
 
-            if (progressCap.getProgress() <= 0) {
+            if (machineCap.getProgress() <= 0) {
                 itemHandler.extractItem(1, 1, false);
                 itemHandler.setStackInSlot(2,
                     new ItemStack(itemHandler.getStackInSlot(0).getItem(), itemHandler.getStackInSlot(2).getCount() + 1));
-                progressCap.setProgress((int)(TPS * TIME));
+                machineCap.setProgress((int)(TPS * TIME));
                 isCrafting = false;
                 setChanged();
             }
         }
         else {
-            progressCap.setProgress((int)(TPS * TIME));
+            machineCap.setProgress((int)(TPS * TIME));
             level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, false), Block.UPDATE_ALL);
         }
 
@@ -133,7 +133,7 @@ public class ZorpBE extends BlockEntity {
             energyStorage.deserializeNBT(tag.get("Energy"));
         }
         if (tag.contains("progress")) {
-            progressCap.deserializeNBT(tag.getCompound("progress"));
+            machineCap.deserializeNBT(tag.getCompound("progress"));
         }
         if (tag.contains("Info")) {
         }
@@ -146,7 +146,7 @@ public class ZorpBE extends BlockEntity {
         tag.put("InventoryRight", allSlots[1].serializeNBT());
         tag.put("InventoryOut", allSlots[2].serializeNBT());
         tag.put("Energy", energyStorage.serializeNBT());
-        tag.put("progress", progressCap.serializeNBT());
+        tag.put("progress", machineCap.serializeNBT());
 
         CompoundTag infoTag = new CompoundTag();
         tag.put("Info", infoTag);
@@ -218,7 +218,7 @@ public class ZorpBE extends BlockEntity {
             return energy.cast();
         }
         if (cap == MachineCapability.MACHINE) {
-            return progress.cast();
+            return machineLazy.cast();
         }
         return super.getCapability(cap, side);
     }
