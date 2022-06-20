@@ -1,8 +1,14 @@
 package com.scaun.zorpal.client;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
+import javax.imageio.ImageIO;
+
 import org.lwjgl.opengl.GL11;
+
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -24,6 +30,25 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
     private final ResourceLocation ARR = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/zorp_trans_arrow3.png");
     private final ResourceLocation SIDES_SMALL = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/sides_s.png");
     private final ResourceLocation POWER_SMALL = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/power_s.png");
+    private final ResourceLocation SIDES_LARGE = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/sides_l.png");
+    private final ResourceLocation POWER_LARGE = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/power_l.png");
+
+    private final int SMALLX = -19;
+    private final int SIDESY = 14;
+    private final int POWERY = 35;
+
+    private final int SMALLW = 21;
+    private final int LARGEW = 62;
+    private final int SMALLH = 20;
+    private final int LARGEH = 60;
+
+    private final int LARGEX = SMALLX - (LARGEW - SMALLW);
+    private final int LARGEY = POWERY + (LARGEH - SMALLH);
+
+    private boolean clicking = false;
+
+    private MyButton sides = new MyButton(SIDES_SMALL, SMALLX, SIDESY, SMALLW, SMALLH);
+    private MyButton power = new MyButton(POWER_SMALL, SMALLX, POWERY, SMALLW, SMALLH);
 
     public ZorpTransScreen(ZorpContainer container, Inventory inv, Component name) {
         super(container, inv, name);
@@ -40,6 +65,8 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
     protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
         renderBars(matrixStack);
         renderButtons(matrixStack, mouseX, mouseY);
+
+        if (clicking) clicking = false;
     }
 
     private void renderBars(PoseStack matrixStack) {
@@ -86,30 +113,47 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
     }
 
     private void renderButtons(PoseStack matrixStack, int mouseX, int mouseY) {
-        //14 35
         int mx = mouseX - getGuiLeft();
         int my = mouseY - getGuiTop();
 
-        int smallx = -19;
-        int largex = -40;
-        int pyOriginal = 35;
 
-        int sx = smallx;
-        int sy = 14;
-        int px = smallx;
-        int py = pyOriginal;
+        // handle collision and resizing of the "sides" button
+        if (sides.isColliding(mx, my)) {
+            renderSides();
+            if (sides.getMode() == MyButton.SMALL) {
+                sides.setImg(SIDES_LARGE);
+                sides.changeSize(LARGEW, LARGEH);
 
-        ResourceLocation sides = SIDES_SMALL;
-        ResourceLocation power = POWER_SMALL;
+                power.setY(LARGEY);
+            }
+        } else if (sides.getMode() == MyButton.LARGE) {
+            sides.setImg(SIDES_SMALL);
+            sides.changeSize(SMALLW, SMALLH);
+            
+            power.setY(POWERY);
+        }
 
-        RenderSystem.setShaderTexture(0, sides);
-        this.blit(matrixStack, sx, sy, 0, 0, 256, 256);
-        RenderSystem.setShaderTexture(0, power);
-        this.blit(matrixStack, px, py, 0, 0, 256, 256);
+        // handle collision and resizing of the "power" button
+        if (power.isColliding(mx, my)) {
+            renderPower();
+            if (power.getMode() == MyButton.SMALL) {
+                power.setImg(POWER_LARGE);
+                power.changeSize(LARGEW, LARGEH);
+            }
+        } else if (power.getMode() == MyButton.LARGE) {
+            power.setImg(POWER_SMALL);
+            power.changeSize(SMALLW, SMALLH);
+        }
 
+        sides.render(this, matrixStack);
+        power.render(this, matrixStack);
+    }
 
+    private void renderSides() {
+    }
 
-        drawString(matrixStack, Minecraft.getInstance().font, "X", mx, my, 0xffff0000);
+    private void renderPower() {
+        
     }
 
     @Override
@@ -120,6 +164,12 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
         // String str = relX + ", " + relY + ": " + this.imageWidth + "x" + this.imageHeight;
         // System.out.println(str);
         this.blit(matrixStack, relX, relY, 0, 0, 256, 256);
+    }
+
+    @Override
+    public boolean mouseClicked(double p_97748_, double p_97749_, int p_97750_) {
+        clicking = true; 
+        return super.mouseClicked(p_97748_, p_97749_, p_97750_);
     }
 
     private float energyPercent() {

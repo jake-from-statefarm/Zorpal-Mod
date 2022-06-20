@@ -138,6 +138,10 @@ public class ZorpContainer extends AbstractContainerMenu {
         return blockEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getMaxEnergyStored).orElse(0);
     }
 
+    public int getEnergyUsage() {
+        return 0;
+    }
+
     public int getCounter() {
         //System.out.println("CLIENT: " + blockEntity.getCapability(ProgressCapability.PROGRESS).map(IProgress::getProgress).orElse(0));
         return blockEntity.getCapability(MachineCapability.MACHINE).map(IMachine::getProgress).orElse(0);
