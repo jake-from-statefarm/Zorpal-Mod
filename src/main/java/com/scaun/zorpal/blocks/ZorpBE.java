@@ -89,7 +89,7 @@ public class ZorpBE extends BlockEntity {
         if (hasRecipe() && isCrafting) {
             machineCap.addProgress((int)(-SPEED));;
 
-            energyStorage.addEnergy(-USAGE);
+            energyStorage.addEnergy(-(int)(USAGE * SPEED));
             level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, true), Block.UPDATE_ALL);
             setChanged();
 
@@ -198,7 +198,7 @@ public class ZorpBE extends BlockEntity {
     }
 
     private MachineCapability createProgress() {
-        return new MachineCapability() {
+        return new MachineCapability(CAPACITY, RECEIVE) {
 
             @Override
             public void onChanged() {
