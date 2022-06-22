@@ -62,7 +62,7 @@ public class ZorpContainer extends AbstractContainerMenu {
             public void set(int value) {
                     blockEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
                         int energyStored = h.getEnergyStored() & 0xffff0000;
-                        ((CustomEnergyStorage)h).setEnergy(energyStored + (value & 0xffff));
+                        ((MachineCapability)h).setEnergy(energyStored + (value & 0xffff));
                     });
             }
         });
@@ -75,7 +75,7 @@ public class ZorpContainer extends AbstractContainerMenu {
             public void set(int value) {
                 blockEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
                     int energyStored = h.getEnergyStored() & 0x0000ffff;
-                    ((CustomEnergyStorage)h).setEnergy(energyStored | (value << 16));
+                    ((MachineCapability)h).setEnergy(energyStored | (value << 16));
                 });
             }
         });
@@ -143,7 +143,7 @@ public class ZorpContainer extends AbstractContainerMenu {
     }
 
     public int getCounter() {
-        //System.out.println("CLIENT: " + blockEntity.getCapability(ProgressCapability.PROGRESS).map(IProgress::getProgress).orElse(0));
+        int a = blockEntity.getCapability(MachineCapability.MACHINE).map(IMachine::getProgress).orElse(0);
         return blockEntity.getCapability(MachineCapability.MACHINE).map(IMachine::getProgress).orElse(0);
     }
 

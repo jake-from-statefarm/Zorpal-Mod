@@ -54,12 +54,9 @@ public class ZorpBE extends BlockEntity {
     private final LazyOptional<IItemHandler> handlerInput = LazyOptional.of(() -> new CombinedInvWrapper(itemHandlerLeft, itemHandlerRight));
     private final LazyOptional<IItemHandler> handlerEverything = LazyOptional.of(() -> itemHandler);
 
-
-    private final CustomEnergyStorage energyStorage = createEnergy();
-    private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
-
     private final MachineCapability machineCap = createProgress();
     private final LazyOptional<IMachine> machineLazy = LazyOptional.of(() -> machineCap);
+    private final LazyOptional<IEnergyStorage> energyLazy = LazyOptional.of(() -> machineCap);
 
     private boolean signal = false;
     private boolean isCrafting = false;
@@ -72,24 +69,29 @@ public class ZorpBE extends BlockEntity {
     @Override
     public void setRemoved() {
         super.setRemoved();
+        handlerLeft.invalidate();
+        handlerRight.invalidate();
+        handlerOut.invalidate();
+        handlerInput.invalidate();
         handlerEverything.invalidate();
-        energy.invalidate();        
+        machineLazy.invalidate();
+        energyLazy.invalidate();        
     }
 
     public void tickServer() {
         BlockState blockState = level.getBlockState(worldPosition);
         getLevel().sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 2);
 
-        if (hasRecipe() && hasNotReachedStackLimit() && energyStorage.getEnergyStored() >= (USAGE * TPS * TIME) / SPEED && !isCrafting) {
+        if (hasRecipe() && hasNotReachedStackLimit() && machineCap.getEnergyStored() >= (USAGE * TPS * TIME) / SPEED && !isCrafting) {
             machineCap.setProgress((int)(TPS * TIME));
             isCrafting = true;
             level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, true), Block.UPDATE_ALL);
             setChanged();
         }
         if (hasRecipe() && isCrafting) {
-            machineCap.addProgress((int)(-SPEED));;
+            machineCap.incProcress();
 
-            energyStorage.addEnergy(-(int)(USAGE * SPEED));
+            machineCap.consumeEnergy((int)(USAGE * SPEED));
             level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, true), Block.UPDATE_ALL);
             setChanged();
 
@@ -129,11 +131,8 @@ public class ZorpBE extends BlockEntity {
         if (tag.contains("InventoryOut")) {
             allSlots[2].deserializeNBT(tag.getCompound("InventoryOut"));
         }
-        if (tag.contains("Energy")) {
-            energyStorage.deserializeNBT(tag.get("Energy"));
-        }
-        if (tag.contains("progress")) {
-            machineCap.deserializeNBT(tag.getCompound("progress"));
+        if (tag.contains("Machine")) {
+            machineCap.deserializeNBT(tag.getCompound("Machine"));
         }
         if (tag.contains("Info")) {
         }
@@ -145,8 +144,7 @@ public class ZorpBE extends BlockEntity {
         tag.put("InventoryLeft", allSlots[0].serializeNBT());
         tag.put("InventoryRight", allSlots[1].serializeNBT());
         tag.put("InventoryOut", allSlots[2].serializeNBT());
-        tag.put("Energy", energyStorage.serializeNBT());
-        tag.put("progress", machineCap.serializeNBT());
+        tag.put("Machine", machineCap.serializeNBT());
 
         CompoundTag infoTag = new CompoundTag();
         tag.put("Info", infoTag);
@@ -198,8 +196,7 @@ public class ZorpBE extends BlockEntity {
     }
 
     private MachineCapability createProgress() {
-        return new MachineCapability(CAPACITY, RECEIVE) {
-
+        return new MachineCapability(CAPACITY, RECEIVE, USAGE, SPEED) {
             @Override
             public void onChanged() {
                 setChanged();
@@ -212,10 +209,9 @@ public class ZorpBE extends BlockEntity {
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return handlerEverything.cast();
-            // return fuckthis.cast();
         }
         if (cap == CapabilityEnergy.ENERGY) {
-            return energy.cast();
+            return energyLazy.cast();
         }
         if (cap == MachineCapability.MACHINE) {
             return machineLazy.cast();

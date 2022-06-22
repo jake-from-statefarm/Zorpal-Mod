@@ -1,7 +1,5 @@
 package com.scaun.zorpal.cap;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.common.util.INBTSerializable;
 
 public interface IMachine {
     int getProgress();
@@ -25,10 +23,6 @@ public interface IMachine {
     void setOutput(boolean[] arr);
 
     void setInOutput(int index, boolean val);
-
-    int getCapacity();
-
-    void setCapacity(int val);
 
     int getUsage();
 
