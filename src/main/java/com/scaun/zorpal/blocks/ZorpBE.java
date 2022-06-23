@@ -34,7 +34,7 @@ public class ZorpBE extends BlockEntity {
 
     public static final int CAPACITY = 200000;
     public static final int RECEIVE = 2000;
-    public static final int USAGE = 80; 
+    public static final int USAGE = 120; 
     public static final float SPEED = 1.0f;
     public static final int TPS = 20;
     public static final float TIME = 8.0f;

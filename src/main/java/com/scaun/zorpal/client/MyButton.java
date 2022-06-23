@@ -13,8 +13,8 @@ public class MyButton {
     public static final int SMALL = 0;
     public static final int LARGE = 1;
 
-    private int x, y, w, h;
-    private ResourceLocation img;
+    protected int x, y, w, h;
+    protected ResourceLocation img;
 
     private int mode = SMALL;
 
