@@ -8,21 +8,13 @@ public interface IMachine {
 
     void addProgress(int i);
 
-    boolean[] getInput();
+    int[] getSides();
 
-    boolean getInInput(int index);
+    int getInSides(int index);
 
-    void setInput(boolean[] arr);
+    void setSides(int[] arr);
 
-    void setInInput(int index, boolean val);
-
-    boolean[] getOutput();
-
-    boolean getInOutput(int index);
-
-    void setOutput(boolean[] arr);
-
-    void setInOutput(int index, boolean val);
+    void setInSides(int index, int val);
 
     int getUsage();
 

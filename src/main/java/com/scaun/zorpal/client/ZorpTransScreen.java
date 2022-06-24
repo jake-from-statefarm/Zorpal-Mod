@@ -26,32 +26,71 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
 
-    private final ResourceLocation GUI = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans_gui.png");
-    private final ResourceLocation ARR = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/zorp_trans_arrow3.png");
-    private final ResourceLocation SIDES_SMALL = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/sides_s.png");
-    private final ResourceLocation POWER_SMALL = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/power_s.png");
-    private final ResourceLocation SIDES_LARGE = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/sides_l.png");
-    private final ResourceLocation POWER_LARGE = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/power_l.png");
+    private static final ResourceLocation GUI = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans_gui.png");
+    private static final ResourceLocation ARR = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/zorp_trans_arrow3.png");
 
-    private final int SMALLX = -19;
-    private final int SIDESY = 14;
-    private final int POWERY = 35;
+    private static final ResourceLocation SIDES_SMALL = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/sides_s.png");
+    private static final ResourceLocation POWER_SMALL = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/power_s.png");
+    private static final ResourceLocation SIDES_LARGE = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/sides_l.png");
+    private static final ResourceLocation POWER_LARGE = new ResourceLocation(Zorpal.MODID, "textures/gui/zorp_trans/power_l.png");
 
-    private final int SMALLW = 21;
-    private final int LARGEW = 62;
-    private final int SMALLH = 20;
-    private final int LARGEH = 60;
+    private static final ResourceLocation INACTIVE = new ResourceLocation(Zorpal.MODID, "textures/gui/button/inactive.png");
+    private static final ResourceLocation    INPUT = new ResourceLocation(Zorpal.MODID, "textures/gui/button/in.png");
+    private static final ResourceLocation   OUTPUT = new ResourceLocation(Zorpal.MODID, "textures/gui/button/out.png");
 
-    private final int LARGEX = SMALLX - (LARGEW - SMALLW);
-    private final int LARGEY = POWERY + (LARGEH - SMALLH);
+    private static final ResourceLocation[] BUTTONS = {INACTIVE, INPUT, OUTPUT};
 
-    private boolean clicking = false;
+    // Coords for the "sides" and "power" interactive tabs
+    private static final int SMALLX = -19;
+    private static final int SIDESY = 14;
+    private static final int POWERY = 35;
 
+    private static final int SMALLW = 21;
+    private static final int LARGEW = 62;
+    private static final int SMALLH = 20;
+    private static final int LARGEH = 60;
+
+    private static final int LARGEX = SMALLX - (LARGEW - SMALLW);
+    private static final int LARGEY = POWERY + (LARGEH - SMALLH);
+
+    // Coords for the buttons in the "sides" tab
+    private static final int X1 = LARGEX + 6;
+    private static final int X2 = LARGEX + 23;
+    private static final int X3 = LARGEX + 40;
+
+    private static final int Y1 = SIDESY + 5;
+    private static final int Y2 = SIDESY + 22;
+    private static final int Y3 = SIDESY + 39;
+
+    private static final int W = 16;
+    private static final int H = 16;
+
+    // Setting up the tabs and buttons
     private MyButton sides = new MyButton(SIDES_SMALL, SMALLX, SIDESY, SMALLW, SMALLH);
     private MyButton power = new MyButton(POWER_SMALL, SMALLX, POWERY, SMALLW, SMALLH);
 
+    private MachineButton top = new MachineButton(BUTTONS, X2, Y1, W, H);
+    private MachineButton left = new MachineButton(BUTTONS, X1, Y2, W, H);
+    private MachineButton face = new MachineButton(BUTTONS, X2, Y2, W, H);
+    private MachineButton right = new MachineButton(BUTTONS, X3, Y2, W, H);
+    private MachineButton bottom = new MachineButton(BUTTONS, X2, Y3, W, H);
+    private MachineButton back = new MachineButton(BUTTONS, X3, Y3, W, H);
+
+    private MachineButton[] sidesButtons = {top, left, face, right, bottom, back};
+
+    private boolean clicking = false;
+
+
     public ZorpTransScreen(ZorpContainer container, Inventory inv, Component name) {
         super(container, inv, name);
+        loadButtons();
+    }
+
+    private void loadButtons() {
+        int[] sidesFromBE = menu.getSides();
+        for (int i = 0; i < sidesButtons.length; i++) {
+            sidesButtons[i].cycleTo(sidesFromBE[i]);
+        }
     }
 
     @Override
@@ -119,7 +158,6 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
 
         // handle collision and resizing of the "sides" button
         if (sides.isColliding(mx, my)) {
-            renderSides();
             if (sides.getMode() == MyButton.SMALL) {
                 sides.setImg(SIDES_LARGE);
                 sides.changeSize(LARGEW, LARGEH);
@@ -135,7 +173,6 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
 
         // handle collision and resizing of the "power" button
         if (power.isColliding(mx, my)) {
-            renderPower();
             if (power.getMode() == MyButton.SMALL) {
                 power.setImg(POWER_LARGE);
                 power.changeSize(LARGEW, LARGEH);
@@ -147,12 +184,23 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
 
         sides.render(this, matrixStack);
         power.render(this, matrixStack);
+        
+        if (sides.getMode() == MyButton.LARGE) renderSides(matrixStack, mx, my);
+        if (power.getMode() == MyButton.LARGE) renderPower(matrixStack);
     }
 
-    private void renderSides() {
+    private void renderSides(PoseStack matrixStack, int mx, int my) {
+        for (int i = 0; i < sidesButtons.length; i++) {
+            MachineButton b = sidesButtons[i];
+            b.render(this, matrixStack);
+            if (clicking && b.isColliding(mx, my)) {
+                b.cycle();
+                menu.setInSides(i, b.getState());
+            }
+        }
     }
 
-    private void renderPower() {
+    private void renderPower(PoseStack matrixStack) {
         
     }
 

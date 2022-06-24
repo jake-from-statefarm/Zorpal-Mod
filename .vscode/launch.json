@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch Battlfield",
+      "request": "launch",
+      "mainClass": "com.scaun.zorpal.tools.Battlfield",
+      "projectName": "Zorpal Mod"
+    },
+    {
+      "type": "java",
       "name": "Launch Test",
       "request": "launch",
       "mainClass": "com.scaun.zorpal.tools.Test",

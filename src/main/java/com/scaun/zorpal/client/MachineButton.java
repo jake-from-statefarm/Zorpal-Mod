@@ -9,15 +9,19 @@ import net.minecraft.resources.ResourceLocation;
 
 public class MachineButton extends MyButton {
 
-    private CircularLinkedNode<ResourceLocation> imgNode;
-    private CircularLinkedNode<Integer> state;
-
     private static int INACTIVE = 0;
     private static int INPUT = 1;
     private static int OUTPUT = 2;
+    
+    private CircularLinkedNode<ResourceLocation> imgNode;
+    private CircularLinkedNode<Integer> state;
+
+    private int entries;
 
     public MachineButton(ResourceLocation[] p_imgs, int p_x, int p_y, int p_w, int p_h) {
         super(p_imgs[0], p_x, p_y, p_w, p_h);
+
+        entries = p_imgs.length;
 
         imgNode = new CircularLinkedNode<ResourceLocation>(p_imgs[0]);
         state = new CircularLinkedNode<Integer>(INACTIVE);
@@ -35,6 +39,23 @@ public class MachineButton extends MyButton {
 
     public void cycle() {
         imgNode = imgNode.getNext();
+        state = state.getNext();
+    }
+
+    public void cycleTo(int i) {
+        if (0 <= i && i < entries) {
+            while (state.getData() != i) {
+                cycle();
+            }
+        }
+    }
+
+    public CircularLinkedNode<ResourceLocation> getImgNode() {
+        return imgNode;
+    }
+
+    public int getState() {
+        return state.getData();
     }
 
     @Override

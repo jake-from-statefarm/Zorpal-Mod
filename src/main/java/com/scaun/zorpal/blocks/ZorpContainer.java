@@ -143,12 +143,20 @@ public class ZorpContainer extends AbstractContainerMenu {
     }
 
     public int getCounter() {
-        int a = blockEntity.getCapability(MachineCapability.MACHINE).map(IMachine::getProgress).orElse(0);
         return blockEntity.getCapability(MachineCapability.MACHINE).map(IMachine::getProgress).orElse(0);
     }
 
     public int getCounterMax() {
         return ((ZorpBE)blockEntity).getCounterMax();
+    }
+
+    public int[] getSides() {
+        return blockEntity.getCapability(MachineCapability.MACHINE).map(IMachine::getSides).orElse(null);
+    }
+
+    public void setInSides(int index, int value) {
+        IMachine cap = blockEntity.getCapability(MachineCapability.MACHINE).orElse(null);
+        cap.setInSides(index, value);
     }
 
     @Override

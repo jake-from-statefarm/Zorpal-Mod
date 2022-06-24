@@ -14,8 +14,7 @@ public class MachineCapability implements IMachine, IEnergyStorage, INBTSerializ
 
     private int progress;
 
-    private boolean[] input = new boolean[6];
-    private boolean[] output = new boolean[6];
+    private int[] sides = new int[6];
 
     private int energy;
     private int capacity;
@@ -35,6 +34,8 @@ public class MachineCapability implements IMachine, IEnergyStorage, INBTSerializ
         this.usage = usage;
         this.speed = speed;
         this.energy = Math.max(0 , Math.min(capacity, energy));
+
+
     }
 
     public void incProcress() {
@@ -61,44 +62,23 @@ public class MachineCapability implements IMachine, IEnergyStorage, INBTSerializ
     }
 
     @Override
-    public boolean[] getInput() {
-        return input;
+    public int[] getSides() {
+        return sides;
     }
 
-    public boolean getInInput(int index) {
-        return input[index];
+    public int getInSides(int index) {
+        return sides[index];
     }
 
     @Override
-    public void setInput(boolean[] arr) {
-        input = arr;
+    public void setSides(int[] arr) {
+        sides = arr;
         onChanged();
     }
 
     @Override
-    public void setInInput(int index, boolean val) {
-        input[index] = val;
-        onChanged();
-    }
-
-    @Override
-    public boolean[] getOutput() {
-        return output;
-    }
-
-    public boolean getInOutput(int index) {
-        return output[index];
-    }
-
-    @Override
-    public void setOutput(boolean[] arr) {
-        output = arr;
-        onChanged();
-    }
-
-    @Override
-    public void setInOutput(int index, boolean val) {
-        output[index] = val;
+    public void setInSides(int index, int val) {
+        sides[index] = val;
         onChanged();
     }
 
@@ -162,12 +142,14 @@ public class MachineCapability implements IMachine, IEnergyStorage, INBTSerializ
         CompoundTag tag = new CompoundTag();
         tag.putInt("progress", this.progress);
         tag.putInt("energy", this.energy);
+        tag.putIntArray("io", this.sides);
         return tag;
     }
 
     public void deserializeNBT(CompoundTag nbt) {
         setProgress(nbt.getInt("progress"));
         setEnergy(nbt.getInt("energy"));
+        setSides(nbt.getIntArray("io"));
     }
 
     @Override
