@@ -26,7 +26,8 @@ public class MyItemTags extends ItemTagsProvider {
         tag(Tags.Items.INGOTS)
                 .add(Registration.ZORP_INGOT.get());
         tag(Registration.ZORPAL_ORE_ITEM)
-                .add(Registration.ZORPAL_ORE_STONE_ITEM.get());
+                .add(Registration.ZORPAL_ORE_STONE_ITEM.get())
+                .add(Registration.ZORPAL_ORE_DEEPSLATE_ITEM.get());;
     }
 
     @Override

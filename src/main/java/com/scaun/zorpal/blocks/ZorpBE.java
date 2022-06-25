@@ -289,7 +289,6 @@ public class ZorpBE extends BlockEntity {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (side == null) return handlerEverything.cast();
             else return sideCapability(side);
-            
         }
         if (cap == CapabilityEnergy.ENERGY) {
             return energyLazy.cast();
@@ -306,7 +305,6 @@ public class ZorpBE extends BlockEntity {
         Matrix4f matrix = new Matrix4f(facing.getRotation());
         matrix.invert();
         side = Direction.rotate(matrix, side);
-        System.out.println(side);
 
         // shuffling them around because i barely passed linalg
         switch(side) {

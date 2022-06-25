@@ -28,6 +28,7 @@ public class MyBlockStates extends BlockStateProvider {
     protected void registerStatesAndModels() {
         simpleBlock(Registration.FIRST_BLOCK.get());
         simpleBlock(Registration.ZORPAL_ORE_STONE.get());
+        simpleBlock(Registration.ZORPAL_ORE_DEEPSLATE.get());
         simpleBlock(Registration.ZORPAL_BLOCK.get());
         
         registerPowergen(Registration.POWERGEN.get());

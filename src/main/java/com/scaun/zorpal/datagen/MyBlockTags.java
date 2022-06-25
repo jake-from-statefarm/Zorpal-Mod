@@ -19,20 +19,24 @@ public class MyBlockTags extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(Registration.FIRST_BLOCK.get())
                 .add(Registration.ZORPAL_ORE_STONE.get())
+                .add(Registration.ZORPAL_ORE_DEEPSLATE.get())
                 .add(Registration.POWERGEN.get())
                 .add(Registration.ZORPAL_BLOCK.get())
                 .add(Registration.ZORP_TRANS.get());
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(Registration.FIRST_BLOCK.get())
                 .add(Registration.ZORPAL_ORE_STONE.get())
+                .add(Registration.ZORPAL_ORE_DEEPSLATE.get())
                 .add(Registration.POWERGEN.get())
                 .add(Registration.ZORPAL_BLOCK.get())
                 .add(Registration.ZORP_TRANS.get());
         tag(Tags.Blocks.ORES)
                 .add(Registration.FIRST_BLOCK.get())
-                .add(Registration.ZORPAL_ORE_STONE.get());
+                .add(Registration.ZORPAL_ORE_STONE.get())
+                .add(Registration.ZORPAL_ORE_DEEPSLATE.get());
         tag(Registration.ZORPAL_ORE)
-                .add(Registration.ZORPAL_ORE_STONE.get());
+                .add(Registration.ZORPAL_ORE_STONE.get())
+                .add(Registration.ZORPAL_ORE_DEEPSLATE.get());
     }
 
     @Override

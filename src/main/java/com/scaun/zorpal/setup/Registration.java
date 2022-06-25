@@ -57,6 +57,8 @@ public class Registration {
         // ZORPAL STUFF
     public static final RegistryObject<Block> ZORPAL_ORE_STONE = BLOCKS.register("zorpal_ore", () -> new Block(STRONG_ORE_PROPERTIES));
     public static final RegistryObject<Item> ZORPAL_ORE_STONE_ITEM = fromBlock(ZORPAL_ORE_STONE);
+    public static final RegistryObject<Block> ZORPAL_ORE_DEEPSLATE = BLOCKS.register("zorpal_ore_deepslate", () -> new Block(STRONG_ORE_PROPERTIES));
+    public static final RegistryObject<Item> ZORPAL_ORE_DEEPSLATE_ITEM = fromBlock(ZORPAL_ORE_DEEPSLATE);
     public static final RegistryObject<Item> RAW_ZORP = ITEMS.register("raw_zorp", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> ZORP_INGOT = ITEMS.register("zorp_ingot", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Block> ZORPAL_BLOCK = BLOCKS.register("zorpal_block", () -> new Block(STRONG_ORE_PROPERTIES));
