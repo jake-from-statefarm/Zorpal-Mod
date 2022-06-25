@@ -2,6 +2,7 @@ package com.scaun.zorpal;
 
 import com.scaun.zorpal.setup.ClientSetup;
 import com.scaun.zorpal.setup.ModSetup;
+
 import com.scaun.zorpal.setup.Registration;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,6 +21,7 @@ public class Zorpal {
     public Zorpal() {
 
         // Register the deferred registry
+        ModSetup.setup();
         Registration.init();
 
         // Register the setup method for modloading
