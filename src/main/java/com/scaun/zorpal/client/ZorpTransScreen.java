@@ -239,7 +239,7 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
 
     private float progressPercent() {
         //System.out.println("CLIENT: " + menu.getCounter());
-        return (float)menu.getCounter() / (float)menu.getCounterMax();
+        return menu.getCounter() / (float)menu.getCounterMax();
     }
     
 }

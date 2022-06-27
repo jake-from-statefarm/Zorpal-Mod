@@ -114,14 +114,7 @@ public class ZorpBE extends BlockEntity {
         BlockState blockState = level.getBlockState(worldPosition);
         getLevel().sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 2);
 
-        // for (int i : machineCap.getSides()) {
-        //     System.out.print(i + " ");
-        // } System.out.println();
-
-
-
-
-        if (hasRecipe() && hasNotReachedStackLimit() && machineCap.getEnergyStored() >= (USAGE * TPS * TIME) / SPEED && !isCrafting) {
+        if (hasRecipe() && hasNotReachedStackLimit() && machineCap.getEnergyStored() >= (machineCap.getUsage() * TPS * TIME) / machineCap.getSpeed() && !isCrafting) {
             machineCap.setProgress((int)(TPS * TIME));
             isCrafting = true;
             level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, true), Block.UPDATE_ALL);
@@ -130,7 +123,7 @@ public class ZorpBE extends BlockEntity {
         if (hasRecipe() && isCrafting) {
             machineCap.incProcress();
 
-            machineCap.consumeEnergy((int)(USAGE * SPEED));
+            machineCap.consumeEnergy();
             level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, true), Block.UPDATE_ALL);
             setChanged();
 

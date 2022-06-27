@@ -12,7 +12,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class MachineCapability implements IMachine, IEnergyStorage, INBTSerializable<CompoundTag> {
 
-    private int progress;
+    private float progress;
 
     private int[] sides = new int[6];
 
@@ -44,19 +44,19 @@ public class MachineCapability implements IMachine, IEnergyStorage, INBTSerializ
     }
 
     @Override
-    public int getProgress() {
+    public float getProgress() {
         return progress;
     }
 
     @Override
-    public void setProgress(int i) {
+    public void setProgress(float i) {
         this.progress = i;
         onChanged();
         
     }
 
     @Override
-    public void addProgress(int i) {
+    public void addProgress(float i) {
         this.progress += i;
         onChanged();
     }
@@ -140,7 +140,7 @@ public class MachineCapability implements IMachine, IEnergyStorage, INBTSerializ
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
-        tag.putInt("progress", this.progress);
+        tag.putFloat("progress", this.progress);
         tag.putInt("energy", this.energy);
         tag.putInt("usage", this.usage);
         tag.putFloat("speed", this.speed);
@@ -149,7 +149,7 @@ public class MachineCapability implements IMachine, IEnergyStorage, INBTSerializ
     }
 
     public void deserializeNBT(CompoundTag nbt) {
-        setProgress(nbt.getInt("progress"));
+        setProgress(nbt.getFloat("progress"));
         setEnergy(nbt.getInt("energy"));
         setUsage(nbt.getInt("usage"));
         setSpeed(nbt.getFloat("speed"));

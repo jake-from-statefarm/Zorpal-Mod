@@ -146,8 +146,8 @@ public class ZorpContainer extends AbstractContainerMenu {
         return (int)(usage * speed);
     }
 
-    public int getCounter() {
-        return blockEntity.getCapability(MachineCapability.MACHINE).map(IMachine::getProgress).orElse(0);
+    public float getCounter() {
+        return blockEntity.getCapability(MachineCapability.MACHINE).map(IMachine::getProgress).orElse(0.0f);
     }
 
     public int getCounterMax() {

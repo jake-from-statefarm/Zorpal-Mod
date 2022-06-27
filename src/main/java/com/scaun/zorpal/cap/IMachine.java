@@ -2,11 +2,11 @@ package com.scaun.zorpal.cap;
 
 
 public interface IMachine {
-    int getProgress();
+    float getProgress();
 
-    void setProgress(int i);
+    void setProgress(float i);
 
-    void addProgress(int i);
+    void addProgress(float i);
 
     int[] getSides();
 
