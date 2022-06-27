@@ -142,6 +142,8 @@ public class MachineCapability implements IMachine, IEnergyStorage, INBTSerializ
         CompoundTag tag = new CompoundTag();
         tag.putInt("progress", this.progress);
         tag.putInt("energy", this.energy);
+        tag.putInt("usage", this.usage);
+        tag.putFloat("speed", this.speed);
         tag.putIntArray("io", this.sides);
         return tag;
     }
@@ -149,6 +151,8 @@ public class MachineCapability implements IMachine, IEnergyStorage, INBTSerializ
     public void deserializeNBT(CompoundTag nbt) {
         setProgress(nbt.getInt("progress"));
         setEnergy(nbt.getInt("energy"));
+        setUsage(nbt.getInt("usage"));
+        setSpeed(nbt.getFloat("speed"));
         setSides(nbt.getIntArray("io"));
     }
 
