@@ -17,7 +17,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -25,8 +24,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -43,6 +40,7 @@ public class ZorpBE extends BlockEntity {
     public static final int RECEIVE = 2000;
     public static final int USAGE = 120; 
     public static final float SPEED = 1.0f;
+    public static final float MAXSPEED = 1.0f;
     public static final int TPS = 20;
     public static final float TIME = 8.0f;
 
@@ -58,7 +56,6 @@ public class ZorpBE extends BlockEntity {
 
     private final CombinedInvWrapper itemHandler = new CombinedInvWrapper(itemHandlerLeft, itemHandlerRight, itemHandlerOut);
     private final CombinedInvWrapper itemAutoHandler = new CombinedInvWrapper(itemHandlerLeft, itemHandlerRight, itemHandlerOut) {
-       
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
             return false;
@@ -98,6 +95,7 @@ public class ZorpBE extends BlockEntity {
     public ZorpBE(BlockPos pos, BlockState state) {
         super(Registration.ZORP_TRANS_BE.get(), pos, state);
         machineCap.setProgress((int)(USAGE * TIME));
+
     }
 
     @Override
@@ -119,6 +117,9 @@ public class ZorpBE extends BlockEntity {
         // for (int i : machineCap.getSides()) {
         //     System.out.print(i + " ");
         // } System.out.println();
+
+
+
 
         if (hasRecipe() && hasNotReachedStackLimit() && machineCap.getEnergyStored() >= (USAGE * TPS * TIME) / SPEED && !isCrafting) {
             machineCap.setProgress((int)(TPS * TIME));
