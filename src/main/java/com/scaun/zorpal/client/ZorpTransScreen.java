@@ -201,7 +201,20 @@ public class ZorpTransScreen extends AbstractContainerScreen<ZorpContainer> {
     }
 
     private void renderPower(PoseStack matrixStack) {
-        
+        int power = menu.getEnergy();
+        int usage = menu.getEnergyUsage();
+
+        DecimalFormat twoDecimals = new DecimalFormat("#.00");
+
+        int x = LARGEX + 4;
+        int powery = POWERY + 4;
+        int usagey = powery + 12;
+
+        String powerString = twoDecimals.format((float)(power) / 1000.0f) + "K RF";
+        String usageString = usage + " RF/t";
+
+        drawString(matrixStack, Minecraft.getInstance().font, powerString, x, powery, 0xffffffff);
+        drawString(matrixStack, Minecraft.getInstance().font, usageString, x, usagey, 0xffffffff);
     }
 
     @Override

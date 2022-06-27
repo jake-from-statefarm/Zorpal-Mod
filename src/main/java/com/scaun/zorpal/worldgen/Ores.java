@@ -56,7 +56,7 @@ public class Ores {
             CountPlacement.of(DEEPSLATE_AMOUNT),
             InSquarePlacement.spread(),
             BiomeFilter.biome(),
-            HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.aboveBottom(40))
+            HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.absolute(0))
         );
     }
 
