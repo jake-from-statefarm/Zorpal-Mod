@@ -139,8 +139,11 @@ public class ZorpContainer extends AbstractContainerMenu {
     }
 
     public int getEnergyUsage() {
-        return (int)((float)blockEntity.getCapability(MachineCapability.MACHINE).map(IMachine::getUsage).orElse(0) * 
-                            blockEntity.getCapability(MachineCapability.MACHINE).map(IMachine::getSpeed).orElse(1.0f));
+        float usage = (float)blockEntity.getCapability(MachineCapability.MACHINE).map(IMachine::getUsage).orElse(0);
+        float speed = blockEntity.getCapability(MachineCapability.MACHINE).map(IMachine::getSpeed).orElse(1.0f);
+
+        System.out.println("USAGE: " + usage + " SPEED:" + speed);
+        return (int)(usage * speed);
     }
 
     public int getCounter() {

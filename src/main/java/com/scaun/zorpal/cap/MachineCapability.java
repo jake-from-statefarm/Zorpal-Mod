@@ -187,4 +187,12 @@ public class MachineCapability implements IMachine, IEnergyStorage, INBTSerializ
         }
         onChanged();
     }
+
+    public void consumeEnergy() {
+        this.energy -= (int)((float)usage * speed);
+        if (this.energy < 0) {
+            this.energy = 0;
+        }
+        onChanged();
+    }
 }
