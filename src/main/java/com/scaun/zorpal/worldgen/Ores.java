@@ -26,9 +26,12 @@ public class Ores {
     public static final int NORMAL_AMOUNT = 5;
     public static final int DEEPSLATE_VEINSIZE = 4;
     public static final int DEEPSLATE_AMOUNT = 6;
+    public static final int DENSE_VEINSIZE = 4;
+    public static final int DENSE_AMOUNT = 5;
     
     public static Holder<PlacedFeature> NORMAL_OREGEN;
     public static Holder<PlacedFeature> DEEPSLATE_OREGEN;
+    public static Holder<PlacedFeature> DENSE_OREGEN;
 
     public static void registerConfiguredFeatures() {
         OreConfiguration normalConfig = new OreConfiguration(
@@ -56,7 +59,21 @@ public class Ores {
             CountPlacement.of(DEEPSLATE_AMOUNT),
             InSquarePlacement.spread(),
             BiomeFilter.biome(),
-            HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.absolute(0))
+            HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(15), VerticalAnchor.absolute(0))
+        );
+
+        OreConfiguration denseConfig = new OreConfiguration(
+            OreFeatures.DEEPSLATE_ORE_REPLACEABLES,
+            Registration.ZORPAL_ORE_DENSE.get().defaultBlockState(),
+            DENSE_VEINSIZE
+        );
+        DENSE_OREGEN = registerPlacedFeature(
+            "dense_zorpal_ore", 
+            new ConfiguredFeature<>(Feature.ORE, denseConfig),
+            CountPlacement.of(DENSE_AMOUNT),
+            InSquarePlacement.spread(),
+            BiomeFilter.biome(),
+            HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.aboveBottom(15))
         );
     }
 
@@ -72,6 +89,7 @@ public class Ores {
         } else {
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, NORMAL_OREGEN);
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, DEEPSLATE_OREGEN);
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, DENSE_OREGEN);
         }
     }
 }

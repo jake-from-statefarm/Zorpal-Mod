@@ -2,7 +2,7 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "zorpal_ore_deepslate",
+      "name": "zorpal_ore_dense",
       "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
@@ -26,7 +26,7 @@
                   }
                 }
               ],
-              "name": "zorpal:zorpal_ore_deepslate"
+              "name": "zorpal:zorpal_ore_dense"
             },
             {
               "type": "minecraft:item",
@@ -36,7 +36,7 @@
                   "count": {
                     "type": "minecraft:uniform",
                     "min": 1.0,
-                    "max": 1.0
+                    "max": 3.0
                   },
                   "add": false
                 },

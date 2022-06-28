@@ -18,7 +18,9 @@ public class MyItemTags extends ItemTagsProvider {
     protected void addTags() {
         tag(Tags.Items.ORES)
                 .add(Registration.FIRST_BLOCK_ITEM.get())
-                .add(Registration.ZORPAL_ORE_STONE_ITEM.get());
+                .add(Registration.ZORPAL_ORE_STONE_ITEM.get())
+                .add(Registration.ZORPAL_ORE_DEEPSLATE_ITEM.get())
+                .add(Registration.ZORPAL_ORE_DENSE_ITEM.get());
         tag(Tags.Items.RAW_MATERIALS)
                 .add(Registration.RAW_ZORP.get());
         tag(Tags.Items.OBSIDIAN)
@@ -27,7 +29,8 @@ public class MyItemTags extends ItemTagsProvider {
                 .add(Registration.ZORP_INGOT.get());
         tag(Registration.ZORPAL_ORE_ITEM)
                 .add(Registration.ZORPAL_ORE_STONE_ITEM.get())
-                .add(Registration.ZORPAL_ORE_DEEPSLATE_ITEM.get());;
+                .add(Registration.ZORPAL_ORE_DEEPSLATE_ITEM.get())
+                .add(Registration.ZORPAL_ORE_DENSE_ITEM.get());
     }
 
     @Override

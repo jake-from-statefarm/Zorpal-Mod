@@ -17,8 +17,11 @@ public class MyLanguageProvider extends LanguageProvider {
         add("itemGroup." + ModSetup.TAB_NAME, "Eric's Zorpal Mod");
 
         add(Registration.FIRST_BLOCK.get(), "The First Block I made :)");
+        
         add(Registration.ZORPAL_ORE_STONE.get(), "Zorpal Ore");
         add(Registration.ZORPAL_ORE_DEEPSLATE.get(), "Zorpal Ore");
+        add(Registration.ZORPAL_ORE_DENSE.get(), "Dense Zorpal Ore");
+
         add(Registration.ZORPAL_BLOCK.get(), "God");
 
         add(Registration.POWERGEN.get(), "Power Generator");

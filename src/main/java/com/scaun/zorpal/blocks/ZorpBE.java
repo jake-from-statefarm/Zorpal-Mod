@@ -341,5 +341,11 @@ public class ZorpBE extends BlockEntity {
 
     public int getCounterMax() {
         return (int)(TPS * TIME);
+
     }
+
+    public CombinedInvWrapper getItemHandler() {
+        return itemHandler;
+    }
+      
 }

@@ -20,6 +20,7 @@ public class MyBlockTags extends BlockTagsProvider {
                 .add(Registration.FIRST_BLOCK.get())
                 .add(Registration.ZORPAL_ORE_STONE.get())
                 .add(Registration.ZORPAL_ORE_DEEPSLATE.get())
+                .add(Registration.ZORPAL_ORE_DENSE.get())
                 .add(Registration.POWERGEN.get())
                 .add(Registration.ZORPAL_BLOCK.get())
                 .add(Registration.ZORP_TRANS.get());
@@ -27,16 +28,19 @@ public class MyBlockTags extends BlockTagsProvider {
                 .add(Registration.FIRST_BLOCK.get())
                 .add(Registration.ZORPAL_ORE_STONE.get())
                 .add(Registration.ZORPAL_ORE_DEEPSLATE.get())
+                .add(Registration.ZORPAL_ORE_DENSE.get())
                 .add(Registration.POWERGEN.get())
                 .add(Registration.ZORPAL_BLOCK.get())
                 .add(Registration.ZORP_TRANS.get());
         tag(Tags.Blocks.ORES)
                 .add(Registration.FIRST_BLOCK.get())
                 .add(Registration.ZORPAL_ORE_STONE.get())
-                .add(Registration.ZORPAL_ORE_DEEPSLATE.get());
+                .add(Registration.ZORPAL_ORE_DEEPSLATE.get())
+                .add(Registration.ZORPAL_ORE_DENSE.get());
         tag(Registration.ZORPAL_ORE)
                 .add(Registration.ZORPAL_ORE_STONE.get())
-                .add(Registration.ZORPAL_ORE_DEEPSLATE.get());
+                .add(Registration.ZORPAL_ORE_DEEPSLATE.get())
+                .add(Registration.ZORPAL_ORE_DENSE.get());
     }
 
     @Override

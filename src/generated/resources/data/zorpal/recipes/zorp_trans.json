@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "zorpal",
+  "pattern": [
+    "mxm",
+    "#o#",
+    "mxm"
+  ],
+  "key": {
+    "m": {
+      "tag": "forge:dusts/redstone"
+    },
+    "x": {
+      "item": "minecraft:piston"
+    },
+    "#": {
+      "tag": "forge:gems/diamond"
+    },
+    "o": {
+      "item": "zorpal:zorpal_block"
+    }
+  },
+  "result": {
+    "item": "zorpal:zorp_trans"
+  }
+}

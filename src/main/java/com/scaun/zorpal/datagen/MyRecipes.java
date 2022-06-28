@@ -7,9 +7,12 @@ import com.scaun.zorpal.setup.Registration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.common.Tags;
 
 public class MyRecipes extends RecipeProvider {
 
@@ -40,5 +43,17 @@ public class MyRecipes extends RecipeProvider {
              .unlockedBy("has_ingot", has(Registration.ZORP_INGOT.get()))
              .group("zorpal")
              .save(consumer);
+
+        ShapedRecipeBuilder.shaped(Registration.ZORP_TRANS_ITEM.get())
+            .pattern("mxm")
+            .pattern("#o#")
+            .pattern("mxm")
+            .define('m', Tags.Items.DUSTS_REDSTONE)
+            .define('x', Items.PISTON)
+            .define('#', Tags.Items.GEMS_DIAMOND)
+            .define('o', Registration.ZORPAL_BLOCK_ITEM.get())
+            .unlockedBy("has_ingot", has(Registration.ZORP_INGOT.get()))
+            .group("zorpal")
+            .save(consumer);
     }
 }
