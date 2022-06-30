@@ -23,6 +23,7 @@ a3922b13088fe80006850b2168891adc8f9a2c8b assets/zorpal/models/item/zorp_trans.js
 3c3dafb3d00d5a4a2910b61969621d553277144c assets/zorpal/models/item/zorpal_block.json
 fc5a929e379cd3f50639b880cf999b8f5e119fca assets/zorpal/models/item/zorpal_ore.json
 9c24007707f67540c89cf938eaf21f66a7662491 assets/zorpal/models/item/zorpal_ore_deepslate.json
+fd277bd169d7abe8544a5e7ef14dcf003d3c1d45 assets/zorpal/models/item/zorpal_ore_dense.json
 ad41bd7ef68eaad13235b6f3f73c0ff92de9222d data/forge/tags/blocks/ores.json
 3421dca9a0bde201b01d20a801a88b182c71309d data/forge/tags/items/ingots.json
 cafd1a7651d331116de091fbbe80b438ee9f9d5d data/forge/tags/items/obsidian.json

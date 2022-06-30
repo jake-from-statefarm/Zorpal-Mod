@@ -17,7 +17,7 @@ public class MyItemModels extends ItemModelProvider {
 
         withExistingParent(Registration.ZORPAL_ORE_STONE_ITEM.get().getRegistryName().getPath(), modLoc("block/zorpal_ore"));
         withExistingParent(Registration.ZORPAL_ORE_DEEPSLATE_ITEM.get().getRegistryName().getPath(), modLoc("block/zorpal_ore_deepslate"));
-        withExistingParent(Registration.ZORPAL_BLOCK_ITEM.get().getRegistryName().getPath(), modLoc("block/zorpal_ore_dense"));
+        withExistingParent(Registration.ZORPAL_ORE_DENSE_ITEM.get().getRegistryName().getPath(), modLoc("block/zorpal_ore_dense"));
         withExistingParent(Registration.ZORPAL_BLOCK_ITEM.get().getRegistryName().getPath(), modLoc("block/zorpal_block"));
 
         withExistingParent(Registration.POWERGEN_ITEM.get().getRegistryName().getPath(), modLoc("block/powergen_off"));
